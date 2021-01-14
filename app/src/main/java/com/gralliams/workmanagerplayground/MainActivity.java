@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         //Create WorkRequest: Can be one time or periodic. We'll be using one time in this case
         OneTimeWorkRequest oneTimeDownloadRequest = new OneTimeWorkRequest.Builder(SampleWorker.class)
                                                 .setInputData(data)
-                                                .setConstraints(constraints)
-                                                 .setInitialDelay(5, TimeUnit.HOURS)
+//                                                .setConstraints(constraints)
+//                                                 .setInitialDelay(5, TimeUnit.HOURS)
                                                 .addTag(DOWNLOAD_TAG)
                                                  .build();
 
