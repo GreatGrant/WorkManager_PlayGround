@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        /*Cancel work  */
+        WorkManager.getInstance(this).cancelWorkById(oneTimeDownloadRequest.getId());
     }
 }
