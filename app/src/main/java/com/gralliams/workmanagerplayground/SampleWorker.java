@@ -1,17 +1,20 @@
 package com.gralliams.workmanagerplayground;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 public class SampleWorker extends Worker {
-    private static final String TAG = "SampleWorker";
-
-    public static final String NUMBER = "NUMBER";
+    //a public static string that will be used as the key
+    //for sending and receiving data
+    public static final String TASK_DESC = "task_desc";
 
     public SampleWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -21,23 +24,23 @@ public class SampleWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-    //Get input data
-        Data inputData = getInputData();
-    //Gets int value of input data using its  key (Data object alreay in MainActivity)
-       int number = inputData.getInt(NUMBER, -1);
-        Log.d(TAG, "doWork: number "+number);
-       //Mimicking network request
-        for (int i = number; i > 0; i--){
-            Log.d(TAG, "doWork: i was "+i);
+//getting the input data
+        String taskDesc = getInputData().getString(TASK_DESC);
 
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                Result.failure();
-            }
-
-        }
+        displayNotification("My Worker", taskDesc);
         return Result.success();
+    }
+
+    private void displayNotification(String title, String task) {
+        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("simplifiedcoding", "simplifiedcoding", NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+        }
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), "simplifiedcoding")
+                .setContentTitle(title)
+                .setContentText(task)
+                .setSmallIcon(R.mipmap.ic_launcher);
+        notificationManager.notify(1, notification.build());
     }
 }
