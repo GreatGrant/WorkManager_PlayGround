@@ -48,17 +48,19 @@ public class MainActivity extends AppCompatActivity {
         //Create WorkManager Instance to enqueue the request: oneTimeWorkRequest in this case
         WorkManager.getInstance(this).enqueue(oneTimeDownloadRequest);
 
-        //Create WorkRequest: Periodic WorkRequest in this case, repeat interval indicates the number of times the request ought to be repeated
+        //To create WorkRequest: Periodic WorkRequest in this case, repeat interval indicates the number of times the request ought to be repeated
         PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(SampleWorker.class, 7, TimeUnit.DAYS)
                                                                             .setInputData(data)
                                                                             .setConstraints(constraints)
 //                                                                            .setInitialDelay(5, TimeUnit.HOURS)
                                                                             .addTag("PERIODIC")
                                                                             .build();
+
+        /*enqueue as shown below if this is the request you want to use*/
 //        WorkManager.getInstance(this).enqueue(periodicWorkRequest);
 
 
-        /* Check work status */
+        /*To Check work status */
         WorkManager.getInstance(this).getWorkInfoByIdLiveData(oneTimeDownloadRequest.getId()).observe(this, new Observer<WorkInfo>() {
             @Override
             public void onChanged(WorkInfo workInfo) {
@@ -66,7 +68,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*Cancel work  */
+        /*To cancel work  */
         WorkManager.getInstance(this).cancelWorkById(oneTimeDownloadRequest.getId());
+
+        /* Chaining multiple works:*/
+        /*rather than just enqueue each, use keyword .beginWit & .then for other works.
+        You can use .then as many times as required for different works to be chained.
+        Note: You can chain only OneTimeWorkRequest
+        You must also create an output data in your Worker class and pass it as parameter to Result.success() in overridden doWork method
+        The output data of the first request serves as the input of the next request
+        Or still use the input data by passing it as a parameter to result.success() */
+        WorkManager.getInstance(this).beginWith(oneTimeDownloadRequest)
+                                            .then(oneTimeDownloadRequest)
+                                            .then(oneTimeDownloadRequest)
+                                            .enqueue();
     }
 }
