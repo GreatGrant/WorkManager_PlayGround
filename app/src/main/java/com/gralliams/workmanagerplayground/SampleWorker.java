@@ -11,7 +11,7 @@ import androidx.work.WorkerParameters;
 public class SampleWorker extends Worker {
     private static final String TAG = "SampleWorker";
 
-    private static final String NUMBER = "NUMBER";
+    public static final String NUMBER = "NUMBER";
 
     public SampleWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -29,12 +29,14 @@ public class SampleWorker extends Worker {
        //Mimicking network request
         for (int i = number; i > 0; i--){
             Log.d(TAG, "doWork: i was "+i);
+
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 Result.failure();
             }
+
         }
         return Result.success();
     }
