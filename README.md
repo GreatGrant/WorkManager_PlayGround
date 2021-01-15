@@ -2,7 +2,16 @@
 
 A practice project on using  Android Jetpack library and one of the android architecture component - WorkManager.
 WorkManager is used for performing usually deferrable task which may not be intended to be performed immediately.
-WorkManager has an edge over Job Scheduler, Job Dispatcher, Alarm manager and Broadcast receiver, because it provides backward compatibility.
+WorkManager has an edge over Job Scheduler, Job Dispatcher, Alarm manager and Broadcast receiver, because it has
+
+- Support for both asynchronous one-off and periodic tasks
+- Support for constraints such as network conditions, storage space, and charging status
+- Chaining of complex work requests, including running work in parallel
+- Output from one work request used as input for the next
+- Handles API level compatibility back to API level 14(see note)
+- Works with or without Google Play services
+- Follows system health best practices
+- LiveData support to easily display work request state in UI
 
 ## Areas covered:
 - OneTimeWorkRequest
