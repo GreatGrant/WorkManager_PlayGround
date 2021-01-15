@@ -1,4 +1,4 @@
-# WorkManager PlayGround
+# WorkManager & Notification PlayGround
 
 A practice project on using  Android Jetpack library and one of the android architecture component - WorkManager.
 WorkManager is used for performing usually deferrable task which may not be intended to be performed immediately.
@@ -9,8 +9,8 @@ WorkManager has an edge over Job Scheduler, Job Dispatcher, Alarm manager and Br
 - PeriodicWorkRequest
 - Constraints
 - Checking  Work Status
-- Chained Request, and
 - Cancelling requests.
+- Handling notification in worker class
 
 ## Proceses followed:
 - Create a seperate class for handing the task and extend the worker class
