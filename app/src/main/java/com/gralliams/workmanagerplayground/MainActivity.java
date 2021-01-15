@@ -36,9 +36,15 @@ public class MainActivity extends AppCompatActivity {
                 .putString(SampleWorker.TASK_DESC, "The task data passed from MainActivity")
                 .build();
 
+        Constraints constraints = new Constraints.Builder()
+                                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                                        .setRequiresCharging(true)
+                                        .build();
+
         final OneTimeWorkRequest workRequest =
                 new OneTimeWorkRequest.Builder(SampleWorker.class)
                         .setInputData(data)
+                        .setConstraints(constraints)
                         .build();
 
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
