@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 WorkManager.getInstance(getApplicationContext()).enqueue(workRequest);
+//                To cancel work request
+//                WorkManager.getInstance(getApplicationContext()).cancelWorkById(workRequest.getId());
             }
         });
 
