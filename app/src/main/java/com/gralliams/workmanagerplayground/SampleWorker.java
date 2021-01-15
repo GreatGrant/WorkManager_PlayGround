@@ -49,8 +49,10 @@ public class SampleWorker extends Worker {
             notificationManager.createNotificationChannel(channel);
         }
 
-        // Create an explicit intent for an Activity in your app
+        // Create an explicit intent for an Activity and add to the NotificationCompat.Builder object
+        // By using .setContentIntent()
         Intent intent = new Intent(getApplicationContext(), AlertDetails.class);
+        intent.putExtra("Extra", task);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
 

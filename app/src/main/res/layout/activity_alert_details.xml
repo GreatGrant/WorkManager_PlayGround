@@ -7,7 +7,7 @@
     tools:context=".AlertDetails">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView_alert"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="You'd be redirected here when notification clicked"
